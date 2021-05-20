@@ -1,0 +1,22 @@
+create table products (id bigserial primary key,name text, price decimal);
+insert into products (name, price) values
+('Product1', 10),
+('Product2', 20),
+('Product3', 30),
+('Product4', 40),
+('Product5', 50),
+('Product6', 60),
+('Product7', 70),
+('Product8', 80),
+('Product9', 90),
+('Product10', 100),
+('Product11', 110),
+('Product12', 120),
+('Product13', 130),
+('Product14', 140),
+('Product15', 150),
+('Product16', 160),
+('Product17', 170),
+('Product18', 180),
+('Product19', 190),
+('Product20', 200);
