@@ -13,14 +13,14 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
 
     $scope.deleteProduct = function (id) {
         console.log('product id: '+id)
-        $http.delete(contextPath + '/product/delete/'+id)
+        $http.delete(contextPath + '/product/' + id)
             .then(function (resp){
                 $scope.fillTable();
             })
 
     };
 
-    $scope.fillTable = function () {
+    $scope.fillTable = function (pageIndex = 1) {
         $http({
             url: contextPath + '/product',
             method: 'GET',
@@ -28,12 +28,34 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
                 'name': $scope.filter ? $scope.filter.name : null,
                 'price': $scope.filter ? $scope.filter.price : null,
                 'greater': $scope.filter ? $scope.filter.greater : null,
-                'less': $scope.filter ? $scope.filter.less : null
+                'less': $scope.filter ? $scope.filter.less : null,
+                'category': $scope.filter ? $scope.filter.category : null,
+                'page-number': pageIndex
             }
         }).then(function (response) {
-            $scope.Products = response.data;
+            $scope.ProductsPage = response.data;
+
+            let minPageIndex = pageIndex - 1;
+            if (minPageIndex < 1) {
+                minPageIndex = 1;
+            }
+
+            let maxPageIndex = pageIndex + 1;
+            if (maxPageIndex > $scope.ProductsPage.totalPages) {
+                maxPageIndex = $scope.ProductsPage.totalPages;
+            }
+
+            $scope.PaginationArray = $scope.generatePagesIndexes(minPageIndex, maxPageIndex);
         });
     };
+
+    $scope.generatePagesIndexes = function (startPage, endPage){
+        let arr = [];
+        for (let i = startPage; i <= endPage; i++) {
+            arr.push(i);
+        }
+        return arr;
+    }
 
     $scope.fillTable();
 });

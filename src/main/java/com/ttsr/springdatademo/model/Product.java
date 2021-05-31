@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 @Table(name = "products")
 @Data
 @NoArgsConstructor
-
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,4 +21,7 @@ public class Product {
 
     @Column
     BigDecimal price;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    Category category;
 }

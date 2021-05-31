@@ -1,5 +1,6 @@
 package com.ttsr.springdatademo.service.spec;
 
+import com.ttsr.springdatademo.model.Category;
 import com.ttsr.springdatademo.model.Product;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -20,5 +21,8 @@ public class ProductSpec {
     }
     public static Specification<Product> priceLessThen(Integer price) {
         return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.lessThan(root.get("price"), price);
+    }
+    public static Specification<Product> categoryNameEq(String category) {
+        return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(root.get("category").get("name"), category);
     }
 }
