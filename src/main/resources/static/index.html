@@ -32,6 +32,10 @@
                 <label for="filterPriceLess">Price less then</label>
                 <input class="form-control" type="number" ng-model="filter.less" id="filterPriceLess">
             </div>
+            <div class="form-group col-md-3">
+                <label for="filterByCategoryName">Category name</label>
+                <input class="form-control" type="text" ng-model="filter.category" id="filterByCategoryName">
+            </div>
         </div>
         <div>
             <button class="btn btn-success" type="submit">Filter</button>
@@ -44,18 +48,38 @@
         <tr>
             <td>Name</td>
             <td>Price</td>
+            <td>Category</td>
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="p in Products">
+        <tr ng-repeat="p in ProductsPage.content">
             <td>{{p.name}}</td>
             <td>{{p.price}}</td>
+            <td>{{p.category.name}}</td>
             <td>
                <input type="button" value="Delete" class="btn btn-danger" ng-click="deleteProduct(p.id)">
             </td>
         </tr>
         </tbody>
     </table>
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li ng-class="ProductPage.first ? 'page-item disabled' : 'page-item'">
+                <a class="page-link" ng-click="fillTable(ProductsPage.number)"><<</a>
+            </li>
+
+            <li ng-class="ProductPage.number == pageIndex - 1 ? 'page-item active' : 'page-item'"
+                ng-repeat="pageIndex in PaginationArray">
+                <a class="page-link" ng-click="fillTable(pageIndex)">{{pageIndex}}</a>
+            </li>
+
+            <li ng-class="ProductPage.last ? 'page-item disabled' : 'page-item'">
+                <a class="page-link" ng-click="fillTable(ProductsPage.number + 2)">>></a>
+            </li>
+        </ul>
+
+    </nav>
 
     <h3>Save new product</h3>
     <form novalidate ng-submit="saveProduct()">
