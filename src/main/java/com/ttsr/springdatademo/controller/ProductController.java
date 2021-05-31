@@ -34,18 +34,4 @@ public class ProductController {
         productService.deleteById(id);
     }
 
-    @GetMapping("/search_by_price_greater")
-    public List<Product> findAllByPriceGreaterThan(BigDecimal price){
-        return productService.findAllByPriceGreaterThan(price);
-    }
-
-    @GetMapping("/search_by_price_less")
-    public List<Product> findAllByPriceLessThan(BigDecimal price){
-        return productService.findAllByPriceLessThan(price);
-    }
-
-    @GetMapping("/search_by_price_between")
-    public List<Product> findAllByPriceBetween(BigDecimal min, BigDecimal max){
-        return productService.findAllByPriceBetween(min, max);
-    }
 }
