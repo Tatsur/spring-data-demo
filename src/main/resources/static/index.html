@@ -1,0 +1,76 @@
+<!doctype html>
+
+<html ng-app="app">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <script src="index.js"></script>
+</head>
+
+<body>
+
+<div class="container" ng-controller="indexController">
+    <h1>Product Shop</h1>
+
+    <h3>Filter</h3>
+    <form novalidate ng-submit="fillTable()">
+        <div class="form-group row">
+            <div class="form-group col-md-3">
+                <label for="filterName">Name</label>
+                <input class="form-control" type="text" ng-model="filter.name" id="filterName">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="filterPriceGreater">Price greater then</label>
+                <input class="form-control" type="number" ng-model="filter.greater" id="filterPriceGreater">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="filterPriceLess">Price less then</label>
+                <input class="form-control" type="number" ng-model="filter.less" id="filterPriceLess">
+            </div>
+        </div>
+        <div>
+            <button class="btn btn-success" type="submit">Filter</button>
+        </div>
+    </form>
+
+    <h3>Products</h3>
+    <table class="table table-hover" cellpadding="0" cellspacing="0">
+        <thead>
+        <tr>
+            <td>Name</td>
+            <td>Price</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="p in Products">
+            <td>{{p.name}}</td>
+            <td>{{p.price}}</td>
+            <td>
+               <input type="button" value="Delete" class="btn btn-danger" ng-click="deleteProduct(p.id)">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3>Save new product</h3>
+    <form novalidate ng-submit="saveProduct()">
+        <div class="form-group col-md-6">
+            <label >Name</label>
+            <input class="form-control" type="text" ng-model="newProduct.name">
+        </div>
+        <div class="form-group col-md-6">
+            <label >Price</label>
+            <input class="form-control" type="number" ng-model="newProduct.price">
+        </div>
+        <div>
+            <button class="btn btn-success" type="submit">Save</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
