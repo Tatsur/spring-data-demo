@@ -20,6 +20,15 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
 
     };
 
+    $scope.getCategories = function (){
+        $http({
+            url: contextPath + '/product/categories',
+            method: 'GET'
+        }).then(function (response){
+            $scope.Categories = response.data;
+        })
+    }
+
     $scope.fillTable = function (pageIndex = 1) {
         $http({
             url: contextPath + '/product',
@@ -44,7 +53,7 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
             if (maxPageIndex > $scope.ProductsPage.totalPages) {
                 maxPageIndex = $scope.ProductsPage.totalPages;
             }
-
+            $scope.getCategories();
             $scope.PaginationArray = $scope.generatePagesIndexes(minPageIndex, maxPageIndex);
         });
     };
@@ -58,4 +67,46 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
     }
 
     $scope.fillTable();
+
+    $scope.addProductToCart = function (productId) {
+        console.log('addProductToCart, product id: '+productId)
+        $http({
+            url: contextPath + '/api/v1/cart/add',
+            method: 'GET',
+            params: {
+                id: productId
+            }
+        }).then(function (resp) {
+            $scope.updateCart();
+        });
+    }
+
+    $scope.removeProductFromCart = function (productId) {
+        $http({
+            url: contextPath + '/api/v1/cart/remove',
+            method: 'POST',
+            params: {
+                id: productId
+            }
+        }).then(function (resp) {
+            $scope.updateCart();
+        });
+    }
+
+    $scope.updateCart = function () {
+        $http.get(contextPath + '/api/v1/cart/show')
+            .then(function (response) {
+                $scope.cart=response.data;
+                $scope.ProductsInCart=$scope.cart.items;
+                $scope.totalCount=$scope.cart.itemsCount;
+                $scope.totalPrice=$scope.cart.totalPrice;
+            });
+    };
+
+    $scope.cleanCart = function () {
+        $http.get(contextPath + '/api/v1/cart/removeAll')
+            .then(function (response) {
+                $scope.updateCart();
+            });
+    };
 });
