@@ -2,18 +2,15 @@ package com.ttsr.springdatademo.controller;
 
 import com.ttsr.springdatademo.dto.CategoryDto;
 import com.ttsr.springdatademo.dto.ProductDto;
-import com.ttsr.springdatademo.model.Product;
 import com.ttsr.springdatademo.service.CategoryService;
 import com.ttsr.springdatademo.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/v1/product")
@@ -32,7 +29,7 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ProductDto findById(@PathVariable Long id){
-        return productService.findById(id).orElseThrow(()-> new NoSuchElementException("Product with that id doesn't exist"));
+        return productService.findById(id);
     }
 
     @GetMapping("/categories")

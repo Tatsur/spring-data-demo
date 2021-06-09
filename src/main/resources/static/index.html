@@ -14,9 +14,11 @@
 
 <body>
 
-<div class="container" ng-controller="indexController">
-    <h1>Product Shop</h1>
-
+<div class="container" ng-controller="ngController">
+    <div class="d-flex justify-content-around">
+        <h1>Product Shop</h1>
+        <a class="btn btn-danger h-50 mt-2" href="/shop/logout" role="button">Logout</a>
+    </div>
     <h3>Filter</h3>
     <form novalidate ng-submit="fillTable()">
         <div class="form-group row">
@@ -60,7 +62,7 @@
                <input type="button" value="Delete" class="btn btn-danger" ng-click="deleteProduct(p.id)">
             </td>
             <td>
-                <button class="btn btn-danger" ng-click="addProductToCart(p.id)">Add to Cart</button>
+                <button class="btn btn-primary" ng-click="addProductToCart(p.id)">Add to Cart</button>
             </td>
         </tr>
         </tbody>
@@ -118,12 +120,12 @@
         </thead>
         <tbody>
         <tr ng-repeat="p in ProductsInCart">
-            <td>{{p.id}}</td>
-            <td>{{p.name}}</td>
-            <td>{{p.categoryName}}</td>
-            <td>{{p.price}}</td>
+            <td>{{p.productId}}</td>
+            <td>{{p.productName}}</td>
+            <td>{{p.productPrice}}</td>
+            <td>{{p.quantity}}</td>
             <td>
-                <button class="btn btn-danger" ng-click="removeProductFromCart(p.id)">Delete</button>
+                <button class="btn btn-danger" ng-click="removeProductFromCart(p.productId)">Delete</button>
             </td>
         </tr>
         <tr>

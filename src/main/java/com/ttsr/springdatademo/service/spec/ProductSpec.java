@@ -1,12 +1,9 @@
 package com.ttsr.springdatademo.service.spec;
 
-import com.ttsr.springdatademo.model.Category;
 import com.ttsr.springdatademo.model.Product;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
-
-import javax.persistence.criteria.CriteriaBuilder;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ProductSpec {

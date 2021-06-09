@@ -1,4 +1,4 @@
-angular.module('app', []).controller('indexController', function ($scope, $http) {
+angular.module('app', []).controller('ngController', function ($scope, $http) {
     const contextPath = 'http://localhost:8189/shop/api/v1';
 
     $scope.saveProduct = function () {
@@ -69,10 +69,9 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
     $scope.fillTable();
 
     $scope.addProductToCart = function (productId) {
-        console.log('addProductToCart, product id: '+productId)
         $http({
-            url: contextPath + '/api/v1/cart/add',
-            method: 'GET',
+            url: contextPath + '/cart/add',
+            method: 'PUT',
             params: {
                 id: productId
             }
@@ -83,8 +82,8 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
 
     $scope.removeProductFromCart = function (productId) {
         $http({
-            url: contextPath + '/api/v1/cart/remove',
-            method: 'POST',
+            url: contextPath + '/cart/remove',
+            method: 'DELETE',
             params: {
                 id: productId
             }
@@ -94,7 +93,7 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
     }
 
     $scope.updateCart = function () {
-        $http.get(contextPath + '/api/v1/cart/show')
+        $http.get(contextPath + '/cart/show')
             .then(function (response) {
                 $scope.cart=response.data;
                 $scope.ProductsInCart=$scope.cart.items;
@@ -104,7 +103,7 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
     };
 
     $scope.cleanCart = function () {
-        $http.get(contextPath + '/api/v1/cart/removeAll')
+        $http.delete(contextPath + '/cart/removeAll')
             .then(function (response) {
                 $scope.updateCart();
             });

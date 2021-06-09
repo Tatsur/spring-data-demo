@@ -1,6 +1,6 @@
 package com.ttsr.springdatademo.dto;
 
-import com.ttsr.springdatademo.model.Cart;
+import com.ttsr.springdatademo.component.Cart;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class CartDto {
 
-    private List<ProductDto> items;
+    private List<OrderItemDto> items;
 
     private BigDecimal totalPrice;
 
@@ -25,13 +25,13 @@ public class CartDto {
     public CartDto(Cart cart){
         items = new ArrayList<>();
         items.addAll(cart.getItems().stream()
-                .map(ProductDto::new)
+                .map(OrderItemDto::new)
                 .collect(Collectors.toList()));
         totalPrice = cart.getTotalPrice();
         itemsCount = cart.getItemsCount();
     }
 
-    public List<ProductDto> showItems(){
+    public List<OrderItemDto> showItems(){
         return Collections.unmodifiableList(items);
     }
 

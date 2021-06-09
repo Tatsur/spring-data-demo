@@ -1,5 +1,6 @@
 package com.ttsr.springdatademo.service;
 
+import com.ttsr.springdatademo.component.Cart;
 import com.ttsr.springdatademo.dto.ProductDto;
 import com.ttsr.springdatademo.model.Category;
 import com.ttsr.springdatademo.model.Product;
@@ -16,7 +17,6 @@ import org.springframework.util.StringUtils;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,11 +34,11 @@ public class ProductService {
             .collect(Collectors.toList()),productPage.getPageable(),productPage.getTotalElements());
     }
 
-    public Optional<ProductDto> findById(Long id) {
-        Product product = productRepository
+    public ProductDto findById(Long id) {
+        return productRepository
                 .findById(id)
-                .orElseThrow(()->new NoSuchElementException(String.format("Product with id = %s was not found",id)));
-        return Optional.of(new ProductDto(product));
+                .map(ProductDto::new)
+                .orElseThrow(()->new NoSuchElementException(String.format("Product with id = %s wasn't found",id)));
     }
 
     public ProductDto save(ProductDto productDto) {
@@ -46,7 +46,9 @@ public class ProductService {
         product.setPrice(productDto.getPrice());
         product.setName(productDto.getName());
         Category category = categoryService.findByName(productDto.getCategory())
-                .orElseThrow(()->new NoSuchElementException(String.format("'%s' category doesn't exist",productDto.getCategory())));
+                .orElseThrow(()->new NoSuchElementException(
+                        String.format("'%s' category doesn't exist",
+                                productDto.getCategory())));
         product.setCategory(category);
         product = productRepository.save(product);
         return new ProductDto(product);

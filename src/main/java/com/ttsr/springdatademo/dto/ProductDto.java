@@ -28,11 +28,4 @@ public class ProductDto {
         this.category = product.getCategory().getName();
         this.price = product.getPrice();
     }
-
-    public ProductDto(ProductDto productDto){
-        this.id = productDto.getId();
-        this.name = productDto.getName();
-        this.category = productDto.getCategory();
-        this.price = productDto.getPrice();
-    }
 }
